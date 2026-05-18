@@ -20,8 +20,8 @@ Outputs:
 '''
 import random
 
-def get_name():
-    name = input("Enter your name: ")
+def get_name(prompt):
+    name = input(prompt)
     return name
 
 
@@ -52,16 +52,23 @@ def compare_rolls(player_roll, computer_roll, computer_wins, player_wins):
     return result, player_wins, computer_wins
 
 
-def print_result(result, player_roll, computer_roll, player_wins, computer_wins):
-    print(f"Your roll: {player_roll}")
+def print_result(result, player_roll, computer_roll, player_wins, computer_wins, name):
+    print(f"{name}'s roll: {player_roll}")
     print(f"Computer's roll: {computer_roll}")
     print(result)
-    print(f"your total wins: {player_wins}/{player_wins + computer_wins}")
-    print(f"computer's total wins: {computer_wins}/{player_wins + computer_wins}")
+    print(f"{name}'s total wins: {player_wins}/{player_wins + computer_wins}")
+    print(f"Computer's total wins: {computer_wins}/{player_wins + computer_wins}")
 
+
+def determine_winner(player_wins, computer_wins):
+    if player_wins > computer_wins:
+        return "You won more rounds than the computer!"
+    else:
+        return "The computer beat you more times than you beat him! Better luck next time"
 
 def main():
-    name = get_name()
+    prompt = "Welcome to the Dice Game! Please enter your name: "
+    name = get_name(prompt)
     amount_of_rounds = get_input()
     rounds = 0
     computer_wins = 0
@@ -69,9 +76,11 @@ def main():
     while rounds < amount_of_rounds:
         player_roll, computer_roll = roll_dice()
         result, player_wins, computer_wins = compare_rolls(player_roll, computer_roll, computer_wins, player_wins)
-        print_result(result, player_roll, computer_roll, player_wins, computer_wins)
+        print_result(result, player_roll, computer_roll, player_wins, computer_wins, name)
         rounds += 1
         input("Press Enter to continue to the next round...")
+    final_message = determine_winner(player_wins, computer_wins)
+    print(final_message)
     print("Thanks for playing!")
 
 
